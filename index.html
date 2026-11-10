@@ -1,0 +1,1169 @@
+<!DOCTYPE html>
+<html lang="pt-BR" id="html-root" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sabores e Tesouros do Nilo: Egito</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        egyptGold: '#D4AF37',
+                        egyptGoldDark: '#AA8C2C',
+                        egyptTurquoise: '#00A86B',
+                        egyptSand: '#F4E8D1',
+                        egyptDark: '#1E1B18',
+                        egyptCard: '#2A2521'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- FontAwesome & Google Fonts -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #1E1B18; }
+        ::-webkit-scrollbar-thumb { background: #D4AF37; border-radius: 4px; }
+        .hero-pattern {
+            background-color: #1E1B18;
+            background-image: radial-gradient(#D4AF37 0.75px, transparent 0.75px);
+            background-size: 24px 24px;
+        }
+        @keyframes flagPop {
+            0% { transform: scale(0.6); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        .animate-flag-pop { animation: flagPop 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; }
+    </style>
+</head>
+<body class="bg-egyptDark text-egyptSand font-sans antialiased selection:bg-egyptGold selection:text-egyptDark">
+
+    <!-- Header Navigation -->
+    <header class="sticky top-0 z-40 bg-egyptDark/95 backdrop-blur border-b border-egyptGold/20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <div class="flex items-center space-x-3">
+                    <button onclick="openFlagModal()" class="group flex items-center gap-2 bg-egyptCard p-1.5 px-3 rounded-full border border-egyptGold/30 hover:border-egyptGold transition shadow cursor-pointer">
+                        <img src="https://flagcdn.com/w80/eg.png" alt="Bandeira Egito" class="w-7 h-4.5 rounded object-cover">
+                        <span class="text-xs font-bold text-egyptGold hidden sm:inline" id="txt-flag-btn">Egito</span>
+                    </button>
+                    <span class="text-lg sm:text-xl font-bold bg-gradient-to-r from-egyptGold to-egyptSand bg-clip-text text-transparent" id="txt-brand">
+                        Nilo & Tradição
+                    </span>
+                </div>
+                
+                <!-- Desktop Menu -->
+                <nav class="hidden md:flex items-center space-x-4 lg:space-x-5">
+                    <button onclick="switchTab('home')" class="nav-btn text-egyptGold hover:text-egyptSand transition font-medium text-sm flex items-center gap-1.5" data-target="home" id="nav-home">
+                        <i class="fa-solid fa-house"></i> <span>Início</span>
+                    </button>
+                    <button onclick="switchTab('history')" class="nav-btn text-egyptSand/70 hover:text-egyptSand transition font-medium text-sm flex items-center gap-1.5" data-target="history" id="nav-history">
+                        <i class="fa-solid fa-landmark"></i> <span>História</span>
+                    </button>
+                    <button onclick="switchTab('culinary')" class="nav-btn text-egyptSand/70 hover:text-egyptSand transition font-medium text-sm flex items-center gap-1.5" data-target="culinary" id="nav-culinary">
+                        <i class="fa-solid fa-utensils"></i> <span>Culinária</span>
+                    </button>
+                    <button onclick="switchTab('economy')" class="nav-btn text-egyptSand/70 hover:text-egyptSand transition font-medium text-sm flex items-center gap-1.5" data-target="economy" id="nav-economy">
+                        <i class="fa-solid fa-chart-line"></i> <span>Economia</span>
+                    </button>
+                    <button onclick="switchTab('calculator')" class="nav-btn text-egyptSand/70 hover:text-egyptSand transition font-medium text-sm flex items-center gap-1.5" data-target="calculator" id="nav-calculator">
+                        <i class="fa-solid fa-calculator"></i> <span>Calculadora</span>
+                    </button>
+                    <button onclick="switchTab('quiz')" class="nav-btn text-egyptSand/70 hover:text-egyptSand transition font-medium text-sm flex items-center gap-1.5" data-target="quiz" id="nav-quiz">
+                        <i class="fa-solid fa-puzzle-piece"></i> <span>Quiz</span>
+                    </button>
+
+                    <!-- Language Selector -->
+                    <div class="relative pl-3 border-l border-egyptGold/20">
+                        <select onchange="changeLanguage(this.value)" id="lang-select" class="bg-egyptCard text-egyptGold text-xs font-bold py-1.5 px-2.5 rounded-lg border border-egyptGold/30 focus:outline-none focus:border-egyptGold cursor-pointer">
+                            <option value="pt">🇵🇹 Português</option>
+                            <option value="en">🇬🇧 English</option>
+                            <option value="ar">🇪🇬 العربية</option>
+                        </select>
+                    </div>
+                </nav>
+
+                <!-- Mobile Menu Toggle -->
+                <div class="md:hidden flex items-center gap-2">
+                    <select onchange="changeLanguage(this.value)" class="bg-egyptCard text-egyptGold text-xs font-bold py-1 px-2 rounded border border-egyptGold/30">
+                        <option value="pt">🇵🇹 PT</option>
+                        <option value="en">🇬🇧 EN</option>
+                        <option value="ar">🇪🇬 AR</option>
+                    </select>
+                    <button id="mobile-menu-btn" class="text-egyptGold hover:text-egyptSand p-2 focus:outline-none">
+                        <i class="fa-solid fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-egyptCard border-b border-egyptGold/20 px-4 pt-2 pb-4 space-y-2">
+            <button onclick="switchTab('home'); toggleMobileMenu();" class="block w-full text-left py-2 px-3 rounded text-egyptGold font-medium" id="mob-home">Início</button>
+            <button onclick="switchTab('history'); toggleMobileMenu();" class="block w-full text-left py-2 px-3 rounded text-egyptSand" id="mob-history">História</button>
+            <button onclick="switchTab('culinary'); toggleMobileMenu();" class="block w-full text-left py-2 px-3 rounded text-egyptSand" id="mob-culinary">Culinária</button>
+            <button onclick="switchTab('economy'); toggleMobileMenu();" class="block w-full text-left py-2 px-3 rounded text-egyptSand" id="mob-economy">Economia</button>
+            <button onclick="switchTab('calculator'); toggleMobileMenu();" class="block w-full text-left py-2 px-3 rounded text-egyptSand" id="mob-calc">Calculadora</button>
+            <button onclick="switchTab('quiz'); toggleMobileMenu();" class="block w-full text-left py-2 px-3 rounded text-egyptSand" id="mob-quiz">Quiz</button>
+        </div>
+    </header>
+
+    <main class="min-h-[calc(100vh-140px)]">
+
+        <!-- TAB: HOME -->
+        <section id="tab-home" class="tab-content">
+            <div class="hero-pattern py-16 sm:py-20 px-4 sm:px-6 lg:px-8 border-b border-egyptGold/20">
+                <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+                    <div>
+                        <span class="inline-block bg-egyptGold/10 text-egyptGold px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider mb-4 border border-egyptGold/30" id="txt-home-tag">
+                            Cultura, História e Gastronomia
+                        </span>
+                        <h1 class="text-4xl sm:text-5xl font-extrabold tracking-tight text-white mb-6" id="txt-home-title">
+                            Os Sabores e Tesouros do <span class="bg-gradient-to-r from-egyptGold to-egyptTurquoise bg-clip-text text-transparent">Egito</span>
+                        </h1>
+                        <p class="text-base sm:text-lg text-egyptSand/80 mb-8 leading-relaxed" id="txt-home-desc">
+                            Explore a história milenar dos faraós, aprenda as receitas tradicionais e compreenda a economia moldada pelo Rio Nilo.
+                        </p>
+                        <div class="flex flex-wrap gap-4">
+                            <button onclick="switchTab('history')" class="bg-gradient-to-r from-egyptGold to-egyptGoldDark text-egyptDark font-bold px-6 py-3 rounded-xl shadow hover:opacity-95 transition flex items-center gap-2" id="txt-btn-home-hist">
+                                <i class="fa-solid fa-landmark"></i> <span>Ver História</span>
+                            </button>
+                            <button onclick="switchTab('culinary')" class="bg-egyptCard border border-egyptGold/40 text-egyptSand font-bold px-6 py-3 rounded-xl hover:bg-egyptCard/80 transition flex items-center gap-2" id="txt-btn-home-cul">
+                                <i class="fa-solid fa-utensils"></i> <span>Explorar Culinária</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="rounded-2xl overflow-hidden shadow-2xl border-2 border-egyptGold/30 bg-egyptCard p-2">
+                            <img src="https://images.unsplash.com/photo-1503177119275-0aa32b3a9368?auto=format&fit=crop&w=800&q=80" alt="Pirâmides do Egito" class="w-full h-80 object-cover rounded-xl">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB: HISTORY -->
+        <section id="tab-history" class="tab-content hidden">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
+                <div class="text-center max-w-3xl mx-auto mb-12">
+                    <span class="inline-block bg-egyptGold/10 text-egyptGold px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-widest border border-egyptGold/30 mb-3" id="txt-hist-tag">
+                        Linha do Tempo
+                    </span>
+                    <h2 class="text-3xl sm:text-4xl font-bold text-white mb-4" id="txt-hist-title">A História do Egito</h2>
+                    <p class="text-egyptSand/70 text-sm sm:text-base leading-relaxed" id="txt-hist-desc">
+                        Uma jornada fascinante desde a era dos Faraós até à modernidade do Canal de Suez.
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <!-- Era 1 - Faraônica -->
+                    <div class="bg-egyptCard border border-egyptGold/20 rounded-2xl p-6 shadow-xl">
+                        <span class="text-xs text-egyptGold font-bold uppercase">c. 3100 a.C. - 332 a.C.</span>
+                        <h3 class="text-xl font-bold text-white mt-1 mb-2" id="txt-era1-title">Era Faraônica</h3>
+                        <p class="text-sm text-egyptSand/70 mb-4 leading-relaxed" id="txt-era1-desc">Unificação do Alto e Baixo Egito por Narmer. Período das Pirâmides de Gizé, hieróglifos e grandes faraós como Ramsés II e Tutancâmon.</p>
+                        <img src="https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?auto=format&fit=crop&w=600&q=80" alt="Era Faraônica" class="w-full h-44 object-cover rounded-xl border border-egyptGold/20">
+                    </div>
+
+                    <!-- Era 2 - Greco-Romano -->
+                    <div class="bg-egyptCard border border-egyptGold/20 rounded-2xl p-6 shadow-xl">
+                        <span class="text-xs text-egyptTurquoise font-bold uppercase">332 a.C. - 641 d.C.</span>
+                        <h3 class="text-xl font-bold text-white mt-1 mb-2" id="txt-era2-title">Período Greco-Romano</h3>
+                        <p class="text-sm text-egyptSand/70 mb-4 leading-relaxed" id="txt-era2-desc">Iniciado por Alexandre, o Grande, e encerrado com Cleópatra VII. Alexandria tornou-se o centro cultural do mundo antigo.</p>
+                        <img src="https://images.unsplash.com/photo-1539650116574-8efeb43e2750?auto=format&fit=crop&w=600&q=80" alt="Greco Romano" class="w-full h-44 object-cover rounded-xl border border-egyptGold/20">
+                    </div>
+
+                    <!-- Era 3 - Islâmica -->
+                    <div class="bg-egyptCard border border-egyptGold/20 rounded-2xl p-6 shadow-xl">
+                        <span class="text-xs text-amber-400 font-bold uppercase">641 d.C. - 1517 d.C.</span>
+                        <h3 class="text-xl font-bold text-white mt-1 mb-2" id="txt-era3-title">Era Islâmica e Mameluca</h3>
+                        <p class="text-sm text-egyptSand/70 mb-4 leading-relaxed" id="txt-era3-desc">Adoção do Islamismo e da língua árabe. Fundação do Cairo em 969 d.C., tornando-se a capital cultural do mundo árabe.</p>
+                        <img src="Templates/Gemini_Generated_Image_unoz2iunoz2iunoz.jfif" alt="Cairo Islâmico" class="w-full h-44 object-cover rounded-xl border border-egyptGold/20">
+                    </div>
+
+                    <!-- Era 4 - Egito Moderno -->
+                    <div class="bg-egyptCard border border-egyptGold/20 rounded-2xl p-6 shadow-xl">
+                        <span class="text-xs text-purple-300 font-bold uppercase">1869 - Presente</span>
+                        <h3 class="text-xl font-bold text-white mt-1 mb-2" id="txt-era4-title">Egito Moderno & Canal de Suez</h3>
+                        <p class="text-sm text-egyptSand/70 mb-4 leading-relaxed" id="txt-era4-desc">Construção do Canal de Suez conectando o Mar Vermelho ao Mediterrâneo, consolidando o Egito como rota global.</p>
+                        <img src="https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&w=600&q=80" alt="Egito Moderno" class="w-full h-44 object-cover rounded-xl border border-egyptGold/20">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB: CULINARY -->
+        <section id="tab-culinary" class="tab-content hidden">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
+                <div class="text-center max-w-2xl mx-auto mb-10 pt-4">
+                    <span class="inline-block bg-egyptGold/10 text-egyptGold px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest border border-egyptGold/30 mb-4" id="txt-cul-tag">
+                        Gastronomia Milenar
+                    </span>
+                    <h2 class="text-3xl sm:text-4xl font-bold text-white mb-4" id="txt-cul-title">Sabores Tradicionais do Egito</h2>
+                    <p class="text-egyptSand/70 text-sm sm:text-base" id="txt-cul-desc">Navegue pelas categorias e descubra receitas completas com modo de preparo passo a passo.</p>
+                </div>
+
+                <!-- Sub-tabs Navigation -->
+                <div class="flex justify-center mb-10 border-b border-egyptGold/20">
+                    <div class="flex space-x-2 sm:space-x-4">
+                        <button onclick="switchCulinarySubtab('mains')" id="subtab-btn-mains" class="subtab-btn py-3 px-4 sm:px-6 text-sm font-bold border-b-2 border-egyptGold text-egyptGold transition">
+                            <i class="fa-solid fa-utensils mr-2"></i> <span id="txt-submains">Pratos Principais</span>
+                        </button>
+                        <button onclick="switchCulinarySubtab('drinks')" id="subtab-btn-drinks" class="subtab-btn py-3 px-4 sm:px-6 text-sm font-medium text-egyptSand/60 border-b-2 border-transparent hover:text-egyptSand transition">
+                            <i class="fa-solid fa-glass-water mr-2"></i> <span id="txt-subdrinks">Bebidas</span>
+                        </button>
+                        <button onclick="switchCulinarySubtab('desserts')" id="subtab-btn-desserts" class="subtab-btn py-3 px-4 sm:px-6 text-sm font-medium text-egyptSand/60 border-b-2 border-transparent hover:text-egyptSand transition">
+                            <i class="fa-solid fa-cookie-bite mr-2"></i> <span id="txt-subdesserts">Sobremesas</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- SUB-TAB: MAINS -->
+                <div id="culinary-mains" class="culinary-subcontent grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <!-- Koshari -->
+                    <div class="bg-egyptCard border border-egyptGold/20 rounded-2xl overflow-hidden shadow-xl flex flex-col justify-between">
+                        <div>
+                            <div class="h-52 overflow-hidden relative bg-egyptDark">
+                                <img src="https://images.unsplash.com/photo-1546069901-ba9599a7e63c?auto=format&fit=crop&w=600&q=80" alt="Koshari" class="w-full h-full object-cover">
+                                <div class="absolute top-3 right-3 bg-egyptDark/90 backdrop-blur px-3 py-1 rounded-lg text-xs font-semibold text-egyptGold border border-egyptGold/30" id="txt-tag-m1">Prato Nacional</div>
+                            </div>
+                            <div class="p-6">
+                                <h3 class="text-2xl font-bold text-white mb-2" id="txt-m1-title">Koshari</h3>
+                                <p class="text-egyptSand/70 text-sm mb-4 leading-relaxed" id="txt-m1-desc">Mistura saborosa de arroz, macarrão, lentilha, grão-de-bico, cebola frita crocante e molho de tomate com alho e vinagre.</p>
+                            </div>
+                        </div>
+                        <div class="px-6 pb-6">
+                            <button onclick="openRecipeModal('koshari')" class="w-full bg-egyptGold text-egyptDark font-bold py-2.5 rounded-xl hover:opacity-95 transition text-sm flex items-center justify-center gap-2 btn-recipe-action">
+                                <i class="fa-solid fa-book-open"></i> <span>Ver Receita & Passo a Passo</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Ful Medames -->
+                    <div class="bg-egyptCard border border-egyptGold/20 rounded-2xl overflow-hidden shadow-xl flex flex-col justify-between">
+                        <div>
+                            <div class="h-52 overflow-hidden relative bg-egyptDark">
+                                <img src="https://images.unsplash.com/photo-1540420773420-3366772f4999?auto=format&fit=crop&w=600&q=80" alt="Ful Medames" class="w-full h-full object-cover">
+                                <div class="absolute top-3 right-3 bg-egyptDark/90 backdrop-blur px-3 py-1 rounded-lg text-xs font-semibold text-egyptGold border border-egyptGold/30" id="txt-tag-m2">Café da Manhã</div>
+                            </div>
+                            <div class="p-6">
+                                <h3 class="text-2xl font-bold text-white mb-2" id="txt-m2-title">Ful Medames</h3>
+                                <p class="text-egyptSand/70 text-sm mb-4 leading-relaxed" id="txt-m2-desc">Favas cozidas lentamente e amassadas com azeite de oliva, cominho, alho, limão e pão egípcio baladi fresco.</p>
+                            </div>
+                        </div>
+                        <div class="px-6 pb-6">
+                            <button onclick="openRecipeModal('ful')" class="w-full bg-egyptGold text-egyptDark font-bold py-2.5 rounded-xl hover:opacity-95 transition text-sm flex items-center justify-center gap-2 btn-recipe-action">
+                                <i class="fa-solid fa-book-open"></i> <span>Ver Receita & Passo a Passo</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Ta'meya -->
+                    <div class="bg-egyptCard border border-egyptGold/20 rounded-2xl overflow-hidden shadow-xl flex flex-col justify-between">
+                        <div>
+                            <div class="h-52 overflow-hidden relative bg-egyptDark">
+                                <img src="Templates/Gemini_Generated_Image_h7rhkbh7rhkbh7rh.jfif" alt="Ta'meya" class="w-full h-full object-cover">
+                                <div class="absolute top-3 right-3 bg-egyptDark/90 backdrop-blur px-3 py-1 rounded-lg text-xs font-semibold text-egyptGold border border-egyptGold/30" id="txt-tag-m3">Falafel Egípcio</div>
+                            </div>
+                            <div class="p-6">
+                                <h3 class="text-2xl font-bold text-white mb-2" id="txt-m3-title">Ta'meya</h3>
+                                <p class="text-egyptSand/70 text-sm mb-4 leading-relaxed" id="txt-m3-desc">O falafel egípcio autêntico feito com massa verde de favas moídas, coentro, salsa e sementes de gergelim por fora.</p>
+                            </div>
+                        </div>
+                        <div class="px-6 pb-6">
+                            <button onclick="openRecipeModal('tameya')" class="w-full bg-egyptGold text-egyptDark font-bold py-2.5 rounded-xl hover:opacity-95 transition text-sm flex items-center justify-center gap-2 btn-recipe-action">
+                                <i class="fa-solid fa-book-open"></i> <span>Ver Receita & Passo a Passo</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Molokhia -->
+                    <div class="bg-egyptCard border border-egyptGold/20 rounded-2xl overflow-hidden shadow-xl flex flex-col justify-between">
+                        <div>
+                            <div class="h-52 overflow-hidden relative bg-egyptDark">
+                                <img src="https://images.unsplash.com/photo-1547592166-23ac45744acd?auto=format&fit=crop&w=600&q=80" alt="Molokhia" class="w-full h-full object-cover">
+                                <div class="absolute top-3 right-3 bg-egyptDark/90 backdrop-blur px-3 py-1 rounded-lg text-xs font-semibold text-egyptGold border border-egyptGold/30" id="txt-tag-m4">Prato Real</div>
+                            </div>
+                            <div class="p-6">
+                                <h3 class="text-2xl font-bold text-white mb-2" id="txt-m4-title">Molokhia</h3>
+                                <p class="text-egyptSand/70 text-sm mb-4 leading-relaxed" id="txt-m4-desc">Sopa verde cremosa feita com folhas de jute picadas e temperada com alho frito na manteiga e coentro seco.</p>
+                            </div>
+                        </div>
+                        <div class="px-6 pb-6">
+                            <button onclick="openRecipeModal('molokhia')" class="w-full bg-egyptGold text-egyptDark font-bold py-2.5 rounded-xl hover:opacity-95 transition text-sm flex items-center justify-center gap-2 btn-recipe-action">
+                                <i class="fa-solid fa-book-open"></i> <span>Ver Receita & Passo a Passo</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SUB-TAB: DRINKS -->
+                <div id="culinary-drinks" class="culinary-subcontent hidden grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <!-- Karkadeh -->
+                    <div class="bg-egyptCard border border-egyptGold/20 rounded-2xl overflow-hidden shadow-xl flex flex-col justify-between">
+                        <div>
+                            <div class="h-52 overflow-hidden relative bg-egyptDark">
+                                <img src="https://images.unsplash.com/photo-1556679343-c7306c1976bc?auto=format&fit=crop&w=600&q=80" alt="Karkadeh" class="w-full h-full object-cover">
+                                <div class="absolute top-3 right-3 bg-egyptDark/90 backdrop-blur px-3 py-1 rounded-lg text-xs font-semibold text-egyptGold border border-egyptGold/30" id="txt-tag-d1">Refrescante</div>
+                            </div>
+                            <div class="p-6">
+                                <h3 class="text-2xl font-bold text-white mb-2" id="txt-d1-title">Karkadeh (Chá de Hibisco)</h3>
+                                <p class="text-egyptSand/70 text-sm mb-4 leading-relaxed" id="txt-d1-desc">Bebida tradicional de infusão de hibisco vermelho intenso, servida gelada no calor ou bem quente no inverno.</p>
+                            </div>
+                        </div>
+                        <div class="px-6 pb-6">
+                            <button onclick="openRecipeModal('karkadeh')" class="w-full bg-egyptGold text-egyptDark font-bold py-2.5 rounded-xl hover:opacity-95 transition text-sm flex items-center justify-center gap-2 btn-recipe-action">
+                                <i class="fa-solid fa-book-open"></i> <span>Ver Receita & Passo a Passo</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Sahlab -->
+                    <div class="bg-egyptCard border border-egyptGold/20 rounded-2xl overflow-hidden shadow-xl flex flex-col justify-between">
+                        <div>
+                            <div class="h-52 overflow-hidden relative bg-egyptDark">
+                                <img src="https://images.unsplash.com/photo-1517256064527-09c73fc73e38?auto=format&fit=crop&w=600&q=80" alt="Sahlab" class="w-full h-full object-cover">
+                                <div class="absolute top-3 right-3 bg-egyptDark/90 backdrop-blur px-3 py-1 rounded-lg text-xs font-semibold text-egyptGold border border-egyptGold/30" id="txt-tag-d2">Bebida Quente</div>
+                            </div>
+                            <div class="p-6">
+                                <h3 class="text-2xl font-bold text-white mb-2" id="txt-d2-title">Sahlab</h3>
+                                <p class="text-egyptSand/70 text-sm mb-4 leading-relaxed" id="txt-d2-desc">Bebida cremosa à base de leite, aromatizada com flor de laranjeira, polvilhada com canela, nozes e pistácios.</p>
+                            </div>
+                        </div>
+                        <div class="px-6 pb-6">
+                            <button onclick="openRecipeModal('sahlab')" class="w-full bg-egyptGold text-egyptDark font-bold py-2.5 rounded-xl hover:opacity-95 transition text-sm flex items-center justify-center gap-2 btn-recipe-action">
+                                <i class="fa-solid fa-book-open"></i> <span>Ver Receita & Passo a Passo</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Sobia -->
+                    <div class="bg-egyptCard border border-egyptGold/20 rounded-2xl overflow-hidden shadow-xl flex flex-col justify-between">
+                        <div>
+                            <div class="h-52 overflow-hidden relative bg-egyptDark">
+                                <img src="https://images.unsplash.com/photo-1541658016709-82535e94bc69?auto=format&fit=crop&w=600&q=80" alt="Sobia" class="w-full h-full object-cover">
+                                <div class="absolute top-3 right-3 bg-egyptDark/90 backdrop-blur px-3 py-1 rounded-lg text-xs font-semibold text-egyptGold border border-egyptGold/30" id="txt-tag-d3">Típica do Ramadão</div>
+                            </div>
+                            <div class="p-6">
+                                <h3 class="text-2xl font-bold text-white mb-2" id="txt-d3-title">Sobia</h3>
+                                <p class="text-egyptSand/70 text-sm mb-4 leading-relaxed" id="txt-d3-desc">Bebida láctea doce e cremosa feita com infusão de arroz, leite de coco, baunilha e açúcar, servida gelada.</p>
+                            </div>
+                        </div>
+                        <div class="px-6 pb-6">
+                            <button onclick="openRecipeModal('sobia')" class="w-full bg-egyptGold text-egyptDark font-bold py-2.5 rounded-xl hover:opacity-95 transition text-sm flex items-center justify-center gap-2 btn-recipe-action">
+                                <i class="fa-solid fa-book-open"></i> <span>Ver Receita & Passo a Passo</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Asheer Asab -->
+                    <div class="bg-egyptCard border border-egyptGold/20 rounded-2xl overflow-hidden shadow-xl flex flex-col justify-between">
+                        <div>
+                            <div class="h-52 overflow-hidden relative bg-egyptDark">
+                                <img src="Templates/Gemini_Generated_Image_czebobczebobczeb.jfif" alt="Suco de Cana" class="w-full h-full object-cover">
+                                <div class="absolute top-3 right-3 bg-egyptDark/90 backdrop-blur px-3 py-1 rounded-lg text-xs font-semibold text-egyptGold border border-egyptGold/30" id="txt-tag-d4">Popular nas Ruas</div>
+                            </div>
+                            <div class="p-6">
+                                <h3 class="text-2xl font-bold text-white mb-2" id="txt-d4-title">Asheer Asab (Suco de Cana)</h3>
+                                <p class="text-egyptSand/70 text-sm mb-4 leading-relaxed" id="txt-d4-desc">Caldo de cana-de-açúcar fresco prensado na hora, extremamente popular nas bancas de rua por todo o Cairo.</p>
+                            </div>
+                        </div>
+                        <div class="px-6 pb-6">
+                            <button onclick="openRecipeModal('asab')" class="w-full bg-egyptGold text-egyptDark font-bold py-2.5 rounded-xl hover:opacity-95 transition text-sm flex items-center justify-center gap-2 btn-recipe-action">
+                                <i class="fa-solid fa-book-open"></i> <span>Ver Receita & Passo a Passo</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SUB-TAB: DESSERTS -->
+                <div id="culinary-desserts" class="culinary-subcontent hidden grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <!-- Basbousa -->
+                    <div class="bg-egyptCard border border-egyptGold/20 rounded-2xl overflow-hidden shadow-xl flex flex-col justify-between">
+                        <div>
+                            <div class="h-52 overflow-hidden relative bg-egyptDark">
+                                <img src="https://images.unsplash.com/photo-1587314168485-3236d6710814?auto=format&fit=crop&w=600&q=80" alt="Basbousa" class="w-full h-full object-cover">
+                                <div class="absolute top-3 right-3 bg-egyptDark/90 backdrop-blur px-3 py-1 rounded-lg text-xs font-semibold text-egyptGold border border-egyptGold/30" id="txt-tag-s1">Doce de Sêmola</div>
+                            </div>
+                            <div class="p-6">
+                                <h3 class="text-2xl font-bold text-white mb-2" id="txt-s1-title">Basbousa</h3>
+                                <p class="text-egyptSand/70 text-sm mb-4 leading-relaxed" id="txt-s1-desc">Bolo fofinho de sêmola de trigo embebido em xarope perfumado de flor de laranjeira e amêndoas por cima.</p>
+                            </div>
+                        </div>
+                        <div class="px-6 pb-6">
+                            <button onclick="openRecipeModal('basbousa')" class="w-full bg-egyptGold text-egyptDark font-bold py-2.5 rounded-xl hover:opacity-95 transition text-sm flex items-center justify-center gap-2 btn-recipe-action">
+                                <i class="fa-solid fa-book-open"></i> <span>Ver Receita & Passo a Passo</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Um Ali -->
+                    <div class="bg-egyptCard border border-egyptGold/20 rounded-2xl overflow-hidden shadow-xl flex flex-col justify-between">
+                        <div>
+                            <div class="h-52 overflow-hidden relative bg-egyptDark">
+                                <img src="https://images.unsplash.com/photo-1551024709-8f23befc6f87?auto=format&fit=crop&w=600&q=80" alt="Um Ali" class="w-full h-full object-cover">
+                                <div class="absolute top-3 right-3 bg-egyptDark/90 backdrop-blur px-3 py-1 rounded-lg text-xs font-semibold text-egyptGold border border-egyptGold/30" id="txt-tag-s2">Pudim Imperial</div>
+                            </div>
+                            <div class="p-6">
+                                <h3 class="text-2xl font-bold text-white mb-2" id="txt-s2-title">Um Ali</h3>
+                                <p class="text-egyptSand/70 text-sm mb-4 leading-relaxed" id="txt-s2-desc">Sobremesa morna de massa folhada assada com leite adoçado, natas, nozes, passas e coco ralado.</p>
+                            </div>
+                        </div>
+                        <div class="px-6 pb-6">
+                            <button onclick="openRecipeModal('umali')" class="w-full bg-egyptGold text-egyptDark font-bold py-2.5 rounded-xl hover:opacity-95 transition text-sm flex items-center justify-center gap-2 btn-recipe-action">
+                                <i class="fa-solid fa-book-open"></i> <span>Ver Receita & Passo a Passo</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Kunafa -->
+                    <div class="bg-egyptCard border border-egyptGold/20 rounded-2xl overflow-hidden shadow-xl flex flex-col justify-between">
+                        <div>
+                            <div class="h-52 overflow-hidden relative bg-egyptDark">
+                                <img src="https://images.unsplash.com/photo-1599785209707-a456fc1337bb?auto=format&fit=crop&w=600&q=80" alt="Kunafa" class="w-full h-full object-cover">
+                                <div class="absolute top-3 right-3 bg-egyptDark/90 backdrop-blur px-3 py-1 rounded-lg text-xs font-semibold text-egyptGold border border-egyptGold/30" id="txt-tag-s3">Fios Dourados</div>
+                            </div>
+                            <div class="p-6">
+                                <h3 class="text-2xl font-bold text-white mb-2" id="txt-s3-title">Kunafa</h3>
+                                <p class="text-egyptSand/70 text-sm mb-4 leading-relaxed" id="txt-s3-desc">Massa em fios finos e crocantes recheada com creme de leite fresco ou queijo, regada com xarope de açúcar.</p>
+                            </div>
+                        </div>
+                        <div class="px-6 pb-6">
+                            <button onclick="openRecipeModal('kunafa')" class="w-full bg-egyptGold text-egyptDark font-bold py-2.5 rounded-xl hover:opacity-95 transition text-sm flex items-center justify-center gap-2 btn-recipe-action">
+                                <i class="fa-solid fa-book-open"></i> <span>Ver Receita & Passo a Passo</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Baklava Egípcia -->
+                    <div class="bg-egyptCard border border-egyptGold/20 rounded-2xl overflow-hidden shadow-xl flex flex-col justify-between">
+                        <div>
+                            <div class="h-52 overflow-hidden relative bg-egyptDark">
+                                <img src="https://images.unsplash.com/photo-1519676867240-f03562e64548?auto=format&fit=crop&w=600&q=80" alt="Baklava" class="w-full h-full object-cover">
+                                <div class="absolute top-3 right-3 bg-egyptDark/90 backdrop-blur px-3 py-1 rounded-lg text-xs font-semibold text-egyptGold border border-egyptGold/30" id="txt-tag-s4">Massa Folhada</div>
+                            </div>
+                            <div class="p-6">
+                                <h3 class="text-2xl font-bold text-white mb-2" id="txt-s4-title">Baklava Egípcia</h3>
+                                <p class="text-egyptSand/70 text-sm mb-4 leading-relaxed" id="txt-s4-desc">Camadas delicadas de massa filo recheadas com pistácio e nozes picadas, regadas com calda de mel e especiarias.</p>
+                            </div>
+                        </div>
+                        <div class="px-6 pb-6">
+                            <button onclick="openRecipeModal('baklava')" class="w-full bg-egyptGold text-egyptDark font-bold py-2.5 rounded-xl hover:opacity-95 transition text-sm flex items-center justify-center gap-2 btn-recipe-action">
+                                <i class="fa-solid fa-book-open"></i> <span>Ver Receita & Passo a Passo</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- TAB: ECONOMY -->
+        <section id="tab-economy" class="tab-content hidden">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
+                <div class="text-center max-w-2xl mx-auto mb-12">
+                    <span class="inline-block bg-egyptTurquoise/10 text-egyptTurquoise px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest border border-egyptTurquoise/30 mb-4" id="txt-econ-tag">
+                        Recursos e Comércio
+                    </span>
+                    <h2 class="text-3xl sm:text-4xl font-bold text-white mb-4" id="txt-econ-title">A Economia do Egito e o Rio Nilo</h2>
+                    <p class="text-egyptSand/70 text-sm sm:text-base" id="txt-econ-desc">Como o país equilibra a agricultura do Nilo, o Canal de Suez e a segurança alimentar da sua população.</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <div class="bg-egyptCard border border-egyptGold/20 rounded-2xl p-6 shadow-xl">
+                        <div class="text-egyptGold text-3xl font-extrabold mb-2">#1</div>
+                        <h3 class="text-lg font-bold text-white mb-2" id="txt-ec1-title">Importação de Trigo</h3>
+                        <p class="text-egyptSand/70 text-xs leading-relaxed" id="txt-ec1-desc">O Egito é um dos maiores importadores mundiais de trigo para subsidiar o pão 'Aish Baladi'.</p>
+                    </div>
+                    <div class="bg-egyptCard border border-egyptGold/20 rounded-2xl p-6 shadow-xl">
+                        <div class="text-egyptTurquoise text-3xl font-extrabold mb-2">95%+</div>
+                        <h3 class="text-lg font-bold text-white mb-2" id="txt-ec2-title">População no Nilo</h3>
+                        <p class="text-egyptSand/70 text-xs leading-relaxed" id="txt-ec2-desc">Quase toda a população vive nas margens do Nilo, onde se concentra a agricultura nacional.</p>
+                    </div>
+                    <div class="bg-egyptCard border border-egyptGold/20 rounded-2xl p-6 shadow-xl">
+                        <div class="text-amber-500 text-3xl font-extrabold mb-2">Suez</div>
+                        <h3 class="text-lg font-bold text-white mb-2" id="txt-ec3-title">Canal de Suez</h3>
+                        <p class="text-egyptSand/70 text-xs leading-relaxed" id="txt-ec3-desc">Rota de navegação global que gera bilhões de dólares cruciais para as economias públicas do Egito.</p>
+                    </div>
+                    <!-- Cartão Traduzido Dinamicamente (Turismo) -->
+                    <div class="bg-egyptCard border border-egyptGold/20 rounded-2xl p-6 shadow-xl">
+                        <div class="text-purple-400 text-3xl font-extrabold mb-2" id="txt-ec4-badge">Turismo</div>
+                        <h3 class="text-lg font-bold text-white mb-2" id="txt-ec4-title">Patrimônio Global</h3>
+                        <p class="text-egyptSand/70 text-xs leading-relaxed" id="txt-ec4-desc">As pirâmides e monumentos históricos garantem entrada vital de divisas estrangeiras.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB: CALCULATOR COMPLETA -->
+        <section id="tab-calculator" class="tab-content hidden">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
+                <div class="text-center max-w-2xl mx-auto mb-10">
+                    <span class="inline-block bg-egyptGold/10 text-egyptGold px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest border border-egyptGold/30 mb-3" id="txt-calc-tag">
+                        Ferramenta Interativa
+                    </span>
+                    <h2 class="text-3xl sm:text-4xl font-bold text-white mb-3" id="txt-calc-title">Calculadora de Refeição Completa</h2>
+                    <p class="text-egyptSand/70 text-sm" id="txt-calc-desc">Calcule as quantidades de pratos principais, bebidas e sobremesas para o número de pessoas.</p>
+                </div>
+
+                <div class="bg-egyptCard border border-egyptGold/20 rounded-2xl p-6 sm:p-8 shadow-xl space-y-6">
+                    <!-- Número de Pessoas -->
+                    <div>
+                        <label for="portion-slider" class="block text-sm font-semibold text-white mb-3 flex justify-between">
+                            <span id="txt-calc-label">Número de Pessoas:</span>
+                            <span id="portion-count" class="text-egyptGold font-bold text-xl">4</span>
+                        </label>
+                        <input id="portion-slider" type="range" min="1" max="30" value="4" class="w-full accent-egyptGold cursor-pointer" oninput="updateCalculator()">
+                    </div>
+
+                    <!-- Configurações Adicionais da Calculadora -->
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 border-t border-b border-egyptGold/20 py-4">
+                        <div>
+                            <label class="block text-xs font-bold text-egyptGold uppercase mb-2" id="txt-calc-select-dish">Prato Principal:</label>
+                            <select id="calc-dish-select" onchange="updateCalculator()" class="w-full bg-egyptDark text-egyptSand text-sm py-2 px-3 rounded-lg border border-egyptGold/30 focus:outline-none">
+                                <option value="koshari">Koshari Tradicional</option>
+                                <option value="ful">Ful Medames</option>
+                                <option value="tameya">Ta'meya (Falafel)</option>
+                            </select>
+                        </div>
+                        <div class="flex items-center gap-2 pt-4 sm:pt-0">
+                            <input type="checkbox" id="calc-include-drink" checked onchange="updateCalculator()" class="accent-egyptGold w-4 h-4 cursor-pointer">
+                            <label for="calc-include-drink" class="text-sm font-medium text-white cursor-pointer" id="txt-calc-inc-drink">Incluir Bebida (Chá Karkadeh)</label>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <input type="checkbox" id="calc-include-dessert" checked onchange="updateCalculator()" class="accent-egyptGold w-4 h-4 cursor-pointer">
+                            <label for="calc-include-dessert" class="text-sm font-medium text-white cursor-pointer" id="txt-calc-inc-dessert">Incluir Sobremesa (Basbousa)</label>
+                        </div>
+                    </div>
+
+                    <!-- Resultados Recalculados -->
+                    <div>
+                        <h3 class="text-base font-bold text-white mb-4 flex items-center gap-2">
+                            <i class="fa-solid fa-basket-shopping text-egyptGold"></i> <span id="txt-calc-ing-title">Ingredientes da Refeição:</span>
+                        </h3>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3" id="ingredients-list"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB: QUIZ -->
+        <section id="tab-quiz" class="tab-content hidden">
+            <div class="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
+                <div class="text-center mb-10">
+                    <span class="inline-block bg-egyptTurquoise/10 text-egyptTurquoise px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest border border-egyptTurquoise/30 mb-3" id="txt-quiz-tag">
+                        Desafio Cultural
+                    </span>
+                    <h2 class="text-3xl sm:text-4xl font-bold text-white mb-3" id="txt-quiz-title">Quiz sobre o Egito</h2>
+                    <p class="text-egyptSand/70 text-sm" id="txt-quiz-desc">Teste seus conhecimentos sobre culinária, história e economia do Egito.</p>
+                </div>
+
+                <div id="quiz-container" class="bg-egyptCard border border-egyptGold/20 rounded-2xl p-6 sm:p-8 shadow-xl">
+                    <div id="quiz-question-box">
+                        <div class="flex justify-between items-center mb-6">
+                            <span id="quiz-progress" class="text-xs font-bold text-egyptGold uppercase tracking-wider">Questão 1 de 4</span>
+                            <span id="quiz-score-indicator" class="text-xs text-egyptSand/60">Pontuação: 0</span>
+                        </div>
+                        <h3 id="quiz-question-text" class="text-lg font-bold text-white mb-6 leading-snug"></h3>
+                        <div id="quiz-options" class="space-y-3"></div>
+                    </div>
+
+                    <div id="quiz-result-box" class="hidden text-center py-6">
+                        <div class="w-16 h-16 rounded-full bg-egyptGold/20 text-egyptGold flex items-center justify-center text-3xl mx-auto mb-4 border border-egyptGold/40">
+                            <i class="fa-solid fa-award"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold text-white mb-2" id="txt-quiz-res-title">Quiz Concluído!</h3>
+                        <p id="quiz-final-score" class="text-base text-egyptSand/80 mb-6"></p>
+                        <button onclick="resetQuiz()" class="bg-gradient-to-r from-egyptGold to-egyptGoldDark text-egyptDark font-bold px-6 py-3 rounded-xl shadow hover:opacity-95 transition" id="txt-quiz-retry">
+                            Jogar Novamente
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FLAG MODAL -->
+    <div id="flag-modal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden flex items-center justify-center p-4" onclick="closeFlagModal()">
+        <div class="bg-egyptCard border-2 border-egyptGold rounded-2xl max-w-sm w-full p-6 shadow-2xl relative animate-flag-pop text-center" onclick="event.stopPropagation()">
+            <button onclick="closeFlagModal()" class="absolute top-3 right-3 text-egyptSand/60 hover:text-white text-xl">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <h3 class="text-xl font-bold text-white mb-4" id="txt-flag-modal-title">Bandeira Oficial do Egito</h3>
+            <img src="https://flagcdn.com/w320/eg.png" alt="Bandeira do Egito" class="w-full h-auto rounded-lg border border-egyptGold/30 shadow mb-4">
+            <div class="text-xs text-egyptSand/80 space-y-1 text-left bg-egyptDark/60 p-3 rounded-xl border border-egyptGold/20">
+                <p><strong class="text-egyptGold" id="txt-f-red">Vermelho:</strong> <span id="txt-f-red-t">História militar e sacrifício.</span></p>
+                <p><strong class="text-white" id="txt-f-white">Branco:</strong> <span id="txt-f-white-t">Paz e futuro promissor.</span></p>
+                <p><strong class="text-gray-400" id="txt-f-black">Preto:</strong> <span id="txt-f-black-t">Superação do período colonial.</span></p>
+                <p><strong class="text-egyptGold" id="txt-f-eagle">Águia de Saladino:</strong> <span id="txt-f-eagle-t">Força e soberania nacional.</span></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- RECIPE MODAL -->
+    <div id="recipe-modal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden flex items-center justify-center p-4" onclick="closeRecipeModal()">
+        <div class="bg-egyptCard border border-egyptGold/40 rounded-2xl max-w-xl w-full max-h-[85vh] overflow-y-auto p-6 sm:p-8 shadow-2xl relative" onclick="event.stopPropagation()">
+            <button onclick="closeRecipeModal()" class="absolute top-4 right-4 text-egyptSand/60 hover:text-white text-xl">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <span id="recipe-category" class="text-xs font-bold text-egyptGold uppercase tracking-widest bg-egyptGold/10 px-3 py-1 rounded-full border border-egyptGold/30 inline-block mb-3">Receita Tradicional</span>
+            <h3 id="recipe-title" class="text-2xl font-bold text-white mb-4">Nome da Receita</h3>
+
+            <div class="flex flex-wrap gap-4 text-xs text-egyptSand/70 mb-6 bg-egyptDark/50 p-3 rounded-xl border border-egyptGold/20">
+                <div><i class="fa-solid fa-clock text-egyptGold mr-1"></i> <span id="recipe-time">30 mins</span></div>
+                <div><i class="fa-solid fa-user-group text-egyptGold mr-1"></i> <span id="recipe-servings">4 Porções</span></div>
+            </div>
+
+            <div class="mb-6">
+                <h4 class="text-xs font-bold uppercase text-egyptGold mb-2 tracking-wider" id="recipe-ing-head"><i class="fa-solid fa-list mr-1"></i> Ingredientes:</h4>
+                <ul id="recipe-ingredients" class="list-disc list-inside text-sm text-egyptSand/80 space-y-1"></ul>
+            </div>
+
+            <div>
+                <h4 class="text-xs font-bold uppercase text-egyptGold mb-2 tracking-wider" id="recipe-prep-head"><i class="fa-solid fa-kitchen-set mr-1"></i> Modo de Preparo:</h4>
+                <ol id="recipe-steps" class="list-decimal list-inside text-sm text-egyptSand/80 space-y-2 leading-relaxed"></ol>
+            </div>
+        </div>
+    </div>
+
+    <footer class="bg-egyptCard border-t border-egyptGold/20 py-8 text-center text-xs text-egyptSand/60">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <p id="txt-footer">© 2026 Sabores e Tesouros do Nilo. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+
+    <!-- Script JavaScript Completo -->
+    <script>
+        let currentLang = 'pt';
+
+        function switchTab(targetId) {
+            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.add('hidden'));
+            const activeTab = document.getElementById(`tab-${targetId}`);
+            if (activeTab) {
+                activeTab.classList.remove('hidden');
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                if(btn.dataset.target === targetId) {
+                    btn.classList.remove('text-egyptSand/70');
+                    btn.classList.add('text-egyptGold');
+                } else {
+                    btn.classList.add('text-egyptSand/70');
+                    btn.classList.remove('text-egyptGold');
+                }
+            });
+        }
+
+        function switchCulinarySubtab(category) {
+            document.querySelectorAll('.culinary-subcontent').forEach(el => el.classList.add('hidden'));
+            const selected = document.getElementById(`culinary-${category}`);
+            if(selected) selected.classList.remove('hidden');
+
+            document.querySelectorAll('.subtab-btn').forEach(btn => {
+                btn.classList.remove('border-egyptGold', 'text-egyptGold', 'font-bold');
+                btn.classList.add('border-transparent', 'text-egyptSand/60', 'font-medium');
+            });
+
+            const activeBtn = document.getElementById(`subtab-btn-${category}`);
+            if(activeBtn) {
+                activeBtn.classList.remove('border-transparent', 'text-egyptSand/60', 'font-medium');
+                activeBtn.classList.add('border-egyptGold', 'text-egyptGold', 'font-bold');
+            }
+        }
+
+        document.getElementById('mobile-menu-btn').addEventListener('click', () => {
+            document.getElementById('mobile-menu').classList.toggle('hidden');
+        });
+        function toggleMobileMenu() { document.getElementById('mobile-menu').classList.add('hidden'); }
+
+        function openFlagModal() { document.getElementById('flag-modal').classList.remove('hidden'); }
+        function closeFlagModal() { document.getElementById('flag-modal').classList.add('hidden'); }
+
+        const recipesData = {
+            pt: {
+                koshari: { title: "Koshari Tradicional", cat: "Prato Nacional", time: "45 mins", servings: "4 porções", ing: ["200g de arroz branco cozido", "150g de macarrão curto", "150g de lentilhas marrons", "100g de grão-de-bico", "2 cebolas fatiadas e fritas", "200ml de molho de tomate temperado"], steps: ["Cozinhe o arroz, lentilhas e macarrão separadamente.", "Frite as cebolas até ficarem bem crocantes.", "Prepare o molho de tomate com alho e cominho.", "Monte o prato em camadas e sirva bem quente."] },
+                ful: { title: "Ful Medames", cat: "Café da Manhã", time: "20 mins", servings: "4 porções", ing: ["400g de favas cozidas", "3 dentes de alho", "Sumo de 1 limão", "Azeite e cominho"], steps: ["Aqueça e amasse ligeiramente as favas.", "Misture o alho, limão, azeite e cominho.", "Sirva com pão fresco egípcio."] },
+                tameya: { title: "Ta'meya (Falafel)", cat: "Lanche Crocante", time: "40 mins", servings: "4 porções", ing: ["300g de favas moídas", "Salsa, coentro e alho-poró", "Sementes de gergelim"], steps: ["Triture as favas com as ervas.", "Forme bolinhos e passe no gergelim.", "Frite em óleo bem quente."] },
+                molokhia: { title: "Molokhia", cat: "Sopa Imperial", time: "35 mins", servings: "4 porções", ing: ["400g de folhas de jute picadas", "1L de caldo de frango", "Alho frito com coentro"], steps: ["Aqueça o caldo e adicione a molokhia.", "Frite alho com coentro na manteiga.", "Misture na sopa e sirva com arroz."] },
+                karkadeh: { title: "Karkadeh", cat: "Bebida Gelada", time: "15 mins", servings: "6 copos", ing: ["1 xícara de hibisco seco", "1L de água", "Açúcar e gelo"], steps: ["Ferva a água com as flores de hibisco.", "Deixe em infusão, coe, adoce e sirva bem gelado."] },
+                sahlab: { title: "Sahlab", cat: "Bebida Quente", time: "15 mins", servings: "3 copos", ing: ["500ml de leite", "2 colheres de amido de milho", "Canela e nozes"], steps: ["Dissolva o amido no leite frio.", "Aqueça até engrossar e sirva com canela e nozes."] },
+                sobia: { title: "Sobia", cat: "Bebida Cremosa", time: "20 mins", servings: "4 copos", ing: ["500ml de leite", "1/2 xícara de pó de arroz", "Leite de coco e baunilha"], steps: ["Bata o leite com arroz e leite de coco.", "Adoce, refrigere e sirva bem gelado."] },
+                asab: { title: "Asheer Asab", cat: "Suco Fresco", time: "5 mins", servings: "2 copos", ing: ["Cana-de-açúcar fresca", "Gelo e limão"], steps: ["Prensa-se a cana fresca na hora.", "Sirva imediatamente com gelo e limão."] },
+                basbousa: { title: "Basbousa", cat: "Doce de Sêmola", time: "50 mins", servings: "8 porções", ing: ["2 xícaras de sêmola", "Manteiga e iogurte", "Xarope de açúcar"], steps: ["Misture os ingredientes e asse a 180°C por 30 mins.", "Regue com xarope quente."] },
+                umali: { title: "Um Ali", cat: "Pudim Real", time: "35 mins", servings: "6 porções", ing: ["Massa folhada assada", "Leite quente adoçado", "Natas e nozes"], steps: ["Esfarele a massa folhada com nozes.", "Despeje o leite e gratinar no forno."] },
+                kunafa: { title: "Kunafa", cat: "Fios Dourados", time: "45 mins", servings: "8 porções", ing: ["Massa de fios kunafa", "Creme de leite ou queijo", "Calda doce"], steps: ["Monte as camadas de massa e creme.", "Asse até dourar e regue com calda."] },
+                baklava: { title: "Baklava Egípcia", cat: "Folhado", time: "50 mins", servings: "10 porções", ing: ["Massa filo", "Pistácios e nozes", "Mel e manteiga"], steps: ["Intercale folhas de massa com manteiga e nozes.", "Asse e regue com mel."] }
+            },
+            en: {
+                koshari: { title: "Traditional Koshari", cat: "National Dish", time: "45 mins", servings: "4 servings", ing: ["200g cooked white rice", "150g short pasta", "150g brown lentils", "100g chickpeas", "2 sliced fried onions", "200ml spiced tomato sauce"], steps: ["Cook rice, lentils, and pasta separately.", "Fry onions until crispy.", "Prepare garlic-tomato sauce.", "Layer the ingredients and serve hot."] },
+                ful: { title: "Ful Medames", cat: "Breakfast", time: "20 mins", servings: "4 servings", ing: ["400g cooked fava beans", "3 garlic cloves", "1 lemon juice", "Olive oil & cumin"], steps: ["Heat and mash fava beans.", "Mix in garlic, lemon, cumin, and oil.", "Serve with fresh Egyptian bread."] },
+                tameya: { title: "Ta'meya (Falafel)", cat: "Crispy Snack", time: "40 mins", servings: "4 servings", ing: ["300g ground fava beans", "Parsley, cilantro, leek", "Sesame seeds"], steps: ["Blend fava beans with herbs.", "Shape into patties and coat with sesame.", "Deep fry in hot oil."] },
+                molokhia: { title: "Molokhia", cat: "Royal Soup", time: "35 mins", servings: "4 servings", ing: ["400g chopped jute leaves", "1L chicken broth", "Fried garlic with coriander"], steps: ["Heat broth and add jute leaves.", "Fry garlic and coriander in butter.", "Mix into soup and serve with rice."] },
+                karkadeh: { title: "Karkadeh", cat: "Cold Drink", time: "15 mins", servings: "6 glasses", ing: ["1 cup dried hibiscus", "1L water", "Sugar and ice"], steps: ["Boil water with hibiscus flowers.", "Steep, strain, sweeten, and serve iced."] },
+                sahlab: { title: "Sahlab", cat: "Hot Drink", time: "15 mins", servings: "3 glasses", ing: ["500ml milk", "2 tbsp cornstarch", "Cinnamon & nuts"], steps: ["Dissolve cornstarch in cold milk.", "Heat until thick, serve with cinnamon."] },
+                sobia: { title: "Sobia", cat: "Creamy Drink", time: "20 mins", servings: "4 glasses", ing: ["500ml milk", "1/2 cup rice powder", "Coconut milk & vanilla"], steps: ["Blend milk, rice powder, and coconut milk.", "Chill and serve icy cold."] },
+                asab: { title: "Sugarcane Juice", cat: "Fresh Juice", time: "5 mins", servings: "2 glasses", ing: ["Fresh sugarcane", "Ice & lime"], steps: ["Press fresh sugarcane.", "Serve immediately with ice."] },
+                basbousa: { title: "Basbousa", cat: "Semolina Cake", time: "50 mins", servings: "8 servings", ing: ["2 cups semolina", "Butter & yogurt", "Sugar syrup"], steps: ["Mix ingredients and bake at 180°C for 30 mins.", "Pour hot syrup over cake."] },
+                umali: { title: "Um Ali", cat: "Royal Pudding", time: "35 mins", servings: "6 servings", ing: ["Baked puff pastry", "Sweetened warm milk", "Cream & nuts"], steps: ["Crumble pastry with nuts.", "Pour milk over top and broil in oven."] },
+                kunafa: { title: "Kunafa", cat: "Golden Dessert", time: "45 mins", servings: "8 servings", ing: ["Shredded pastry dough", "Cream or cheese filling", "Sweet syrup"], steps: ["Layer dough and cream filling.", "Bake until golden and drench in syrup."] },
+                baklava: { title: "Egyptian Baklava", cat: "Pastry", time: "50 mins", servings: "10 servings", ing: ["Phyllo dough", "Pistachios & nuts", "Honey & butter"], steps: ["Layer dough with butter and nuts.", "Bake and drizzle with honey."] }
+            },
+            ar: {
+                koshari: { title: "كشري تقليدي", cat: "طبق وطني", time: "45 دقيقة", servings: "4 وجبات", ing: ["200 جرام أرز مطبوخ", "150 جرام معكرونة", "150 جرام عدس بني", "100 جرام حمص", "2 بصل مقلي", "200 مل صلصة طماطم"], steps: ["اطبخ الأرز والعدس والمعكرونة بشكل منفصل.", "اقلي البصل حتى يصبح مقرمشاً.", "جهز صلصة الطماطم بالثوم والكمون.", "ضعي المكونات في طبقات وقدميها ساخنة."] },
+                ful: { title: "فول مدمس", cat: "إفطار", time: "20 دقيقة", servings: "4 وجبات", ing: ["400 جرام فول مدمس", "3 فصوص ثوم", "عصير ليمونة", "زيت زيتون وكمون"], steps: ["سخن الفول واهرسه قليلاً.", "اخلط الثوم والليمون والكمون وزيت الزيتون.", "قدمه مع الخبز البلدي الطازج."] },
+                tameya: { title: "طعمية مصرية", cat: "وجبة خفيفة", time: "40 دقيقة", servings: "4 وجبات", ing: ["300 جرام فول مدشوش", "بقدونس وكزبرة وثوم", "سمسم"], steps: ["اطحن الفول مع الخضروات.", "شكل الأقراص وغطها بالسمسم.", "اقلها في زيت ساخن."] },
+                molokhia: { title: "ملوخية", cat: "شوربة ملكية", time: "35 دقيقة", servings: "4 وجبات", ing: ["400 جرام ملوخية مفرومة", "1 لتر مرقة دجاج", "ثوم ومقلي بالكزبرة"], steps: ["سخن المرقة وأضف الملوخية.", "احمر الثوم مع الكزبرة في السمن.", "أضف الطشة إلى الملوخية وقدمها مع الأرز."] },
+                karkadeh: { title: "كركديه", cat: "مشروب بارد", time: "15 دقيقة", servings: "6 أكواب", ing: ["كوب كركديه مجفف", "1 لتر ماء", "سكر وثلج"], steps: ["اغلي الماء مع الكركديه.", "اتركه ينقع ثم صفه وأضف السكر والثلج."] },
+                sahlab: { title: "سحلب", cat: "مشروب ساخن", time: "15 دقيقة", servings: "3 أكواب", ing: ["500 مل حليب", "2 ملعقة نشا", "قرفة ومكسرات"], steps: ["ذوب النشا في الحليب البارد.", "سخنه حتى يثقل وقدمه مع القرفة والمكسرات."] },
+                sobia: { title: "سوبيا", cat: "مشروب كريمي", time: "20 دقيقة", servings: "4 أكواب", ing: ["500 مل حليب", "نصف كوب مسحوق أرز", "حليب كوكو وفانيليا"], steps: ["اخلط الحليب مع مسحوق الأرز وحليب الكوكو.", "برد المشروب وقدمه مثلاً."] },
+                asab: { title: "عصير قصب", cat: "عصير طازج", time: "5 دقائق", servings: "كوبان", ing: ["قصب سكر طازج", "ثلج وليمون"], steps: ["اعصر القصب طازجاً.", "قدمه فوراً مع الثلج."] },
+                basbousa: { title: "بسبوسة", cat: "حلوى سميد", time: "50 دقيقة", servings: "8 وجبات", ing: ["كوبان سميد", "سمن ولبن", "شربات سكر"], steps: ["اخلط المكونات واخبز على 180 درجة.", "اسكب الشربات الساخن فور خروجها."] },
+                umali: { title: "أم علي", cat: "حلوى ملكية", time: "35 دقيقة", servings: "6 وجبات", ing: ["رقاق أو ميلفي خبز", "حليب دافئ بسكر", "قشطة ومكسرات"], steps: ["فتت الرقاق مع المكسرات.", "اسكب الحليب وحمر الوجه في الفرن."] },
+                kunafa: { title: "كنافة", cat: "حلوى ذهبية", time: "45 دقيقة", servings: "8 وجبات", ing: ["شعرية كنافة", "حشوة قشطة أو جبن", "شربات"], steps: ["ضع طبقات الكنافة والحشوة.", "اخبزها حتى تحمر واسكب الشربات."] },
+                baklava: { title: "بقلاوة مصرية", cat: "جلاش", time: "50 دقيقة", servings: "10 وجبات", ing: ["عجين جلاش", "فستق ومكسرات", "عسل وسمن"], steps: ["رص طبقات الجلاش بالسمن والمكسرات.", "اخبزها واسكب العسل."] }
+            }
+        };
+
+        function openRecipeModal(key) {
+            const data = (recipesData[currentLang] && recipesData[currentLang][key]) || recipesData['pt'][key];
+            if(!data) return;
+
+            document.getElementById('recipe-title').innerText = data.title;
+            document.getElementById('recipe-category').innerText = data.cat;
+            document.getElementById('recipe-time').innerText = data.time;
+            document.getElementById('recipe-servings').innerText = data.servings;
+
+            const ingList = document.getElementById('recipe-ingredients');
+            ingList.innerHTML = '';
+            data.ing.forEach(i => {
+                const li = document.createElement('li');
+                li.innerText = i;
+                ingList.appendChild(li);
+            });
+
+            const stepList = document.getElementById('recipe-steps');
+            stepList.innerHTML = '';
+            data.steps.forEach(s => {
+                const li = document.createElement('li');
+                li.innerText = s;
+                stepList.appendChild(li);
+            });
+
+            document.getElementById('recipe-modal').classList.remove('hidden');
+        }
+
+        function closeRecipeModal() {
+            document.getElementById('recipe-modal').classList.add('hidden');
+        }
+
+        const uiText = {
+            pt: {
+                flagBtn: "Egito", brand: "Nilo & Tradição",
+                navHome: "Início", navHistory: "História", navCulinary: "Culinária", navEconomy: "Economia", navCalc: "Calculadora", navQuiz: "Quiz",
+                homeTag: "Cultura, História e Gastronomia", homeTitle: 'Os Sabores e Tesouros do <span class="bg-gradient-to-r from-egyptGold to-egyptTurquoise bg-clip-text text-transparent">Egito</span>',
+                homeDesc: "Explore a história milenar dos faraós, aprenda as receitas tradicionais e compreenda a economia moldada pelo Rio Nilo.",
+                btnHist: "Ver História", btnCul: "Explorar Culinária",
+                histTag: "Linha do Tempo", histTitle: "A História do Egito", histDesc: "Uma jornada fascinante desde a era dos Faraós até à modernidade do Canal de Suez.",
+                era1T: "Era Faraônica", era1D: "Unificação do Alto e Baixo Egito por Narmer. Período das Pirâmides de Gizé, hieróglifos e grandes faraós como Ramsés II e Tutancâmon.",
+                era2T: "Período Greco-Romano", era2D: "Iniciado por Alexandre, o Grande, e encerrado com Cleópatra VII. Alexandria tornou-se o centro cultural do mundo antigo.",
+                era3T: "Era Islâmica e Mameluca", era3D: "Adoção do Islamismo e da língua árabe. Fundação do Cairo em 969 d.C., tornando-se a capital cultural do mundo árabe.",
+                era4T: "Egito Moderno & Canal de Suez", era4D: "Construção do Canal de Suez conectando o Mar Vermelho ao Mediterrâneo, consolidando o Egito como rota global.",
+                culTag: "Gastronomia Milenar", culTitle: "Sabores Tradicionais do Egito", culDesc: "Navegue pelas categorias e descubra receitas completas com modo de preparo passo a passo.",
+                subMains: "Pratos Principais", subDrinks: "Bebidas", subDesserts: "Sobremesas",
+                m1T: "Koshari", m1D: "Mistura saborosa de arroz, macarrão, lentilha, grão-de-bico, cebola frita crocante e molho de tomate com alho e vinagre.", tagM1: "Prato Nacional",
+                m2T: "Ful Medames", m2D: "Favas cozidas lentamente e amassadas com azeite de oliva, cominho, alho, limão e pão egípcio baladi fresco.", tagM2: "Café da Manhã",
+                m3T: "Ta'meya", m3D: "O falafel egípcio autêntico feito com massa verde de favas moídas, coentro, salsa e sementes de gergelim por fora.", tagM3: "Falafel Egípcio",
+                m4T: "Molokhia", m4D: "Sopa verde cremosa feita com folhas de jute picadas e temperada com alho frito na manteiga e coentro seco.", tagM4: "Prato Real",
+                d1T: "Karkadeh (Chá de Hibisco)", d1D: "Bebida tradicional de infusão de hibisco vermelho intenso, servida gelada no calor ou bem quente no inverno.", tagD1: "Refrescante",
+                d2T: "Sahlab", d2D: "Bebida cremosa à base de leite, aromatizada com flor de laranjeira, polvilhada com canela, nozes e pistácios.", tagD2: "Bebida Quente",
+                d3T: "Sobia", d3D: "Bebida láctea doce e cremosa feita com infusão de arroz, leite de coco, baunilha e açúcar, servida gelada.", tagD3: "Típica do Ramadão",
+                d4T: "Asheer Asab (Suco de Cana)", d4D: "Caldo de cana-de-açúcar fresco prensado na hora, extremamente popular nas bancas de rua por todo o Cairo.", tagD4: "Popular nas Ruas",
+                s1T: "Basbousa", s1D: "Bolo fofinho de sêmola de trigo embebido em xarope perfumado de flor de laranjeira e amêndoas por cima.", tagS1: "Doce de Sêmola",
+                s2T: "Um Ali", s2D: "Sobremesa morna de massa folhada assada com leite adoçado, natas, nozes, passas e coco ralado.", tagS2: "Pudim Imperial",
+                s3T: "Kunafa", s3D: "Massa em fios finos e crocantes recheada com creme de leite fresco ou queijo, regada com xarope de açúcar.", tagS3: "Fios Dourados",
+                s4T: "Baklava Egípcia", s4D: "Camadas delicadas de massa filo recheadas com pistácio e nozes picadas, regadas com calda de mel e especiarias.", tagS4: "Massa Folhada",
+                btnRecipeText: 'Ver Receita & Passo a Passo',
+                ingHead: '<i class="fa-solid fa-list mr-1"></i> Ingredientes:', prepHead: '<i class="fa-solid fa-kitchen-set mr-1"></i> Modo de Preparo:',
+                econTag: "Recursos e Comércio", econTitle: "A Economia do Egito e o Rio Nilo", econDesc: "Como o país equilibra a agricultura do Nilo, o Canal de Suez e a segurança alimentar da sua população.",
+                ec1T: "Importação de Trigo", ec1D: "O Egito é um dos maiores importadores mundiais de trigo para subsidiar o pão 'Aish Baladi'.",
+                ec2T: "População no Nilo", ec2D: "Quase toda a população vive nas margens do Nilo, onde se concentra a agricultura nacional.",
+                ec3T: "Canal de Suez", ec3D: "Rota de navegação global que gera bilhões de dólares cruciais para as economias públicas do Egito.",
+                ec4Badge: "Turismo", ec4T: "Patrimônio Global", ec4D: "As pirâmides e monumentos históricos garantem entrada vital de divisas estrangeiras.",
+                calcTag: "Ferramenta Interativa", calcTitle: "Calculadora de Refeição Completa", calcDesc: "Calcule as quantidades de pratos principais, bebidas e sobremesas para o número de pessoas.", calcLabel: "Número de Pessoas:", calcSelectDish: "Prato Principal:", calcIncDrink: "Incluir Bebida (Chá Karkadeh)", calcIncDessert: "Incluir Sobremesa (Basbousa)", calcIngTitle: "Ingredientes da Refeição:",
+                quizTag: "Desafio Cultural", quizTitle: "Quiz sobre o Egito", quizDesc: "Teste seus conhecimentos sobre culinária, história e economia do Egito.", quizResT: "Quiz Concluído!", quizRetry: "Jogar Novamente",
+                flagTitle: "Bandeira Oficial do Egito", fRed: "Vermelho:", fRedT: "História militar e sacrifício.", fWhite: "Branco:", fWhiteT: "Paz e futuro promissor.", fBlack: "Preto:", fBlackT: "Superação do período colonial.", fEagle: "Águia de Saladino:", fEagleT: "Força e soberania nacional.",
+                footer: "© 2026 Sabores e Tesouros do Nilo. Todos os direitos reservados."
+            },
+            en: {
+                flagBtn: "Egypt", brand: "Nile & Tradition",
+                navHome: "Home", navHistory: "History", navCulinary: "Culinary", navEconomy: "Economy", navCalc: "Calculator", navQuiz: "Quiz",
+                homeTag: "Culture, History & Gastronomy", homeTitle: 'The Flavors & Treasures of <span class="bg-gradient-to-r from-egyptGold to-egyptTurquoise bg-clip-text text-transparent">Egypt</span>',
+                homeDesc: "Explore the ancient history of pharaohs, learn traditional recipes, and understand the economy shaped by the Nile River.",
+                btnHist: "View History", btnCul: "Explore Culinary",
+                histTag: "Timeline", histTitle: "The History of Egypt", histDesc: "A fascinating journey from the Pharaohs era to the modern Suez Canal.",
+                era1T: "Pharaonic Era", era1D: "Unification of Upper and Lower Egypt by Narmer. The era of the Giza Pyramids, hieroglyphs, and great pharaohs like Ramses II and Tutankhamun.",
+                era2T: "Greco-Roman Period", era2D: "Started by Alexander the Great and ended with Cleopatra VII. Alexandria became the cultural center of the ancient world.",
+                era3T: "Islamic & Mamluk Era", era3D: "Adoption of Islam and the Arabic language. Founding of Cairo in 969 AD, becoming the cultural capital of the Arab world.",
+                era4T: "Modern Egypt & Suez Canal", era4D: "Construction of the Suez Canal connecting the Red Sea to the Mediterranean, consolidating Egypt as a global maritime route.",
+                culTag: "Ancient Gastronomy", culTitle: "Traditional Flavors of Egypt", culDesc: "Browse categories and discover complete step-by-step recipes.",
+                subMains: "Main Dishes", subDrinks: "Drinks", subDesserts: "Desserts",
+                m1T: "Koshari", m1D: "Flavorful mix of rice, pasta, lentils, chickpeas, crispy fried onions, and spiced garlic-vinegar tomato sauce.", tagM1: "National Dish",
+                m2T: "Ful Medames", m2D: "Slow-cooked fava beans mashed with olive oil, cumin, garlic, lemon, and fresh Egyptian baladi bread.", tagM2: "Breakfast",
+                m3T: "Ta'meya", m3D: "Authentic Egyptian falafel made from ground fava bean green dough, cilantro, parsley, and coated with sesame seeds.", tagM3: "Egyptian Falafel",
+                m4T: "Molokhia", m4D: "Creamy green soup made from chopped jute leaves, seasoned with garlic fried in butter and dried coriander.", tagM4: "Royal Dish",
+                d1T: "Karkadeh (Hibiscus Tea)", d1D: "Traditional deep red hibiscus infusion, served icy cold in summer or warm in winter.", tagD1: "Refreshing",
+                d2T: "Sahlab", d2D: "Creamy milk-based drink flavored with orange blossom water, sprinkled with cinnamon, walnuts, and pistachios.", tagD2: "Hot Drink",
+                d3T: "Sobia", d3D: "Sweet and creamy dairy beverage made with rice infusion, coconut milk, vanilla, and sugar, served chilled.", tagD3: "Ramadan Special",
+                d4T: "Asheer Asab (Sugarcane Juice)", d4D: "Freshly pressed sugarcane juice, extremely popular at street stalls all across Cairo.", tagD4: "Street Favorite",
+                s1T: "Basbousa", s1D: "Fluffy semolina cake soaked in fragrant orange blossom syrup and topped with almonds.", tagS1: "Semolina Cake",
+                s2T: "Um Ali", s2D: "Warm baked puff pastry dessert with sweetened milk, cream, walnuts, raisins, and shredded coconut.", tagS2: "Royal Pudding",
+                s3T: "Kunafa", s3D: "Crispy thin shredded dough pastry filled with fresh cream or cheese, drenched in sugar syrup.", tagS3: "Golden Strands",
+                s4T: "Egyptian Baklava", s4D: "Delicate layers of phyllo pastry filled with chopped pistachios and walnuts, drizzled with spiced honey syrup.", tagS4: "Phyllo Pastry",
+                btnRecipeText: "View Recipe & Step-by-Step",
+                ingHead: '<i class="fa-solid fa-list mr-1"></i> Ingredients:', prepHead: '<i class="fa-solid fa-kitchen-set mr-1"></i> Preparation Method:',
+                econTag: "Resources & Trade", econTitle: "Egypt's Economy & Nile River", econDesc: "How the nation balances Nile agriculture, Suez Canal, and food security.",
+                ec1T: "Wheat Imports", ec1D: "Egypt is one of the top wheat importers globally to subsidize 'Aish Baladi' bread.",
+                ec2T: "Population on Nile", ec2D: "Over 95% of the population lives along the fertile banks of the Nile.",
+                ec3T: "Suez Canal", ec3D: "A strategic global shipping lane generating crucial state revenue.",
+                ec4Badge: "Tourism", ec4T: "Global Heritage", ec4D: "Pyramids and historical landmarks bring essential foreign currency.",
+                calcTag: "Interactive Tool", calcTitle: "Complete Meal Calculator", calcDesc: "Calculate main dishes, drinks, and desserts for your guests.", calcLabel: "Number of People:", calcSelectDish: "Main Dish:", calcIncDrink: "Include Drink (Karkadeh Tea)", calcIncDessert: "Include Dessert (Basbousa)", calcIngTitle: "Meal Ingredients:",
+                quizTag: "Cultural Challenge", quizTitle: "Egypt Quiz", quizDesc: "Test your knowledge on Egyptian history, food, and economy.", quizResT: "Quiz Completed!", quizRetry: "Play Again",
+                flagTitle: "Official Flag of Egypt", fRed: "Red:", fRedT: "Military history and sacrifice.", fWhite: "White:", fWhiteT: "Peace and bright future.", fBlack: "Black:", fBlackT: "Overcoming colonial oppression.", fEagle: "Eagle of Saladin:", fEagleT: "Strength and national sovereignty.",
+                footer: "© 2026 Flavors and Treasures of the Nile. All rights reserved."
+            },
+            ar: {
+                flagBtn: "مصر", brand: "النيل والتقاليد",
+                navHome: "الرئيسية", navHistory: "التاريخ", navCulinary: "المطبخ", navEconomy: "الاقتصاد", navCalc: "الحاسبة", navQuiz: "اختبار",
+                homeTag: "الثقافة والتاريخ والمطبخ", homeTitle: 'نكهات وكنوز <span class="bg-gradient-to-r from-egyptGold to-egyptTurquoise bg-clip-text text-transparent">مصر</span>',
+                homeDesc: "استكشف تاريخ الفراعنة القديم، وتعلم الوصفات التقليدية، وافهم الاقتصاد الذي شكله نهر النيل.",
+                btnHist: "استكشف التاريخ", btnCul: "استكشف المطبخ",
+                histTag: "الخط الزمني", histTitle: "تاريخ مصر", histDesc: "رحلة ساحرة من عصر الفراعنة إلى قناة السويس الحديثة.",
+                era1T: "العصر الفرعوني", era1D: "توحيد القطرين على يد الملك نعرمر. عصر الأهرامات والخط الهيروغليفي والملوك العظام مثل رمسيس الثاني وتوت عنخ آمون.",
+                era2T: "العصر اليوناني الروماني", era2D: "بدأ بالإسكندر الأكبر وانتهى بكليوباترا السابعة. أصبحت الإسكندرية المركز الثقافي للعالم القديم.",
+                era3T: "العصر الإسلامي والمملوكي", era3D: "دخول الإسلام واللغة العربية. تأسيس القاهرة عام 969 م لتصبح عاصمة الثقافة في العالم العربي.",
+                era4T: "مصر الحديثة وقناة السويس", era4D: "حفر قناة السويس لربط البحر الأحمر بالبحر الأبيض المتوسط، مما عزز مكانة مصر كطريق مائي عالمي.",
+                culTag: "المطبخ القديم", culTitle: "النكهات المصرية التقليدية", culDesc: "تصفح الأقسام واكتشف الوصفات الكاملة خطوة بخطوة.",
+                subMains: "الأطباق الرئيسية", subDrinks: "المشروبات", subDesserts: "الحلويات",
+                m1T: "كشري", m1D: "خليط لذيذ من الأرز والمعكرونة والعدس والحمص والبصل المقلي مع صلصة الطماطم والدقة.", tagM1: "طبق وطني",
+                m2T: "فول مدمس", m2D: "فول مطبوخ ببطء ومهروس بزيت الزيتون والكمون والثوم والليمون ويقدم مع الخبز البلدي.", tagM2: "إفطار",
+                m3T: "طعمية", m3D: "الفلافل المصرية الأصلية المصنوعة من عجينة الفول والكزبرة والبقدونس والمغطاة بالسمسم.", tagM3: "فلافل مصرية",
+                m4T: "ملوخية", m4D: "شوربة خضراء مصنوعة من أوراق الملوخية المفرومة ومطبوخة بالطشة والثوم والكزبرة.", tagM4: "طبق ملكي",
+                d1T: "كركديه", d1D: "مشروب الكركديه الأحمر التقليدي، يقدم بارداً مثلجاً في الصيف أو ساخناً في الشتاء.", tagD1: "منعش",
+                d2T: "سحلب", d2D: "مشروب حليبي كريمي ساخن بنكهة ماء الزهر، يرش بالقرفة والجوز والفستق.", tagD2: "مشروب ساخن",
+                d3T: "سوبيا", d3D: "مشروب حليبي حلو وكريمي مصنوع من منقوع الأرز وحليب الكوكو والفانيليا والسكر.", tagD3: "رمضاني",
+                d4T: "عصير قصب", d4D: "عصير قصب السكر الطازج المضروب في الحال، يحظى بشعبية كبيرة في شوارع القاهرة.", tagD4: "شعبية كبيرة",
+                s1T: "بسبوسة", s1D: "كعكة سميد هشة تسقى بالشربات المعطر بماء الزهر ومزينة باللوز.", tagS1: "حلوى سميد",
+                s2T: "أم علي", s2D: "حلوى رقاق مخبوزة دافئة مع الحليب المحلى والقشطة والمكسرات وجوز الهند.", tagS2: "أم علي الملكية",
+                s3T: "كنافة", s3D: "عجين خيوط كنافة مقرمشة محشوة بالقشطة الطازجة أو الجبن وتسقى بالشربات.", tagS3: "خيوط ذهبية",
+                s4T: "بقلاوة مصرية", s4D: "طبقات من عجين الجلاش المحشو بالفستق والمكسرات والمحلاة بالعسل.", tagS4: "جلاش",
+                btnRecipeText: "عرض الوصفة وخطوات التحضير",
+                ingHead: '<i class="fa-solid fa-list mr-1"></i> المكونات:', prepHead: '<i class="fa-solid fa-kitchen-set mr-1"></i> طريقة التحضير:',
+                econTag: "الموارد والتجارة", econTitle: "اقتصاد مصر ونهر النيل", econDesc: "كيف توازن الدولة بين زراعة النيل وقناة السويس والأمن الغذائي.",
+                ec1T: "استيراد القمح", ec1D: "تعد مصر من أكبر مستوردي القمح في العالم لدعم الخبز البلدي.",
+                ec2T: "السكان على النيل", ec2D: "يعيش أكثر من 95٪ من السكان على ضفاف نهر النيل الخصبة.",
+                ec3T: "قناة السويس", ec3D: "ممر مائي عالمي استراتيجي يولد إيرادات هامة للدولة.",
+                ec4Badge: "السياحة", ec4T: "التراث العالمي", ec4D: "تجذب الأهرامات والمعالم التاريخية ملايين الزوار سنوياً.",
+                calcTag: "أداة تفاعلية", calcTitle: "حاسبة الوجبات الكاملة", calcDesc: "احسب كميات الأطباق الرئيسية والمشروبات والحلويات بدقة.", calcLabel: "عدد الأشخاص:", calcSelectDish: "الطبق الرئيسي:", calcIncDrink: "إضافة مشروب (كركديه)", calcIncDessert: "إضافة حلوى (بسبوسة)", calcIngTitle: "مكونات الوجبة:",
+                quizTag: "تحدي ثقافي", quizTitle: "اختبار عن مصر", quizDesc: "اختبر معلوماتك في التاريخ والمطبخ والاقتصاد المصري.", quizResT: "اكتمل الاختبار!", quizRetry: "إعادة المحاولة",
+                flagTitle: "علم جمهورية مصر العربية", fRed: "الأحمر:", fRedT: "تاريخ دماء الشهداء والتضحية.", fWhite: "الأبيض:", fWhiteT: "السلام والمستقبل المشرق.", fBlack: "الأسود:", fBlackT: "التغلب على عصور الاستعمار.", fEagle: "نسر صلاح الدين:", fEagleT: "القوة والسيادة الوطنية.",
+                footer: "© 2026 نكهات وكنوز النيل. جميع الحقوق محفوظة."
+            }
+        };
+
+        function changeLanguage(lang) {
+            currentLang = lang;
+            const t = uiText[lang] || uiText.pt;
+
+            // Configurar Direção do Texto para Árabe (RTL)
+            if (lang === 'ar') {
+                document.getElementById('html-root').setAttribute('dir', 'rtl');
+            } else {
+                document.getElementById('html-root').setAttribute('dir', 'ltr');
+            }
+
+            // Sincronizar Selects de Idioma
+            document.querySelectorAll('select').forEach(s => {
+                if(s.id === 'lang-select' || s.parentElement.classList.contains('md:hidden')) {
+                    s.value = lang;
+                }
+            });
+
+            // Troca de Textos Gerais
+            document.getElementById('txt-flag-btn').innerText = t.flagBtn;
+            document.getElementById('txt-brand').innerText = t.brand;
+
+            document.querySelector('#nav-home span').innerText = t.navHome;
+            document.querySelector('#nav-history span').innerText = t.navHistory;
+            document.querySelector('#nav-culinary span').innerText = t.navCulinary;
+            document.querySelector('#nav-economy span').innerText = t.navEconomy;
+            document.querySelector('#nav-calculator span').innerText = t.navCalc;
+            document.querySelector('#nav-quiz span').innerText = t.navQuiz;
+
+            document.getElementById('mob-home').innerText = t.navHome;
+            document.getElementById('mob-history').innerText = t.navHistory;
+            document.getElementById('mob-culinary').innerText = t.navCulinary;
+            document.getElementById('mob-economy').innerText = t.navEconomy;
+            document.getElementById('mob-calc').innerText = t.navCalc;
+            document.getElementById('mob-quiz').innerText = t.navQuiz;
+
+            document.getElementById('txt-home-tag').innerText = t.homeTag;
+            document.getElementById('txt-home-title').innerHTML = t.homeTitle;
+            document.getElementById('txt-home-desc').innerText = t.homeDesc;
+            document.querySelector('#txt-btn-home-hist span').innerText = t.btnHist;
+            document.querySelector('#txt-btn-home-cul span').innerText = t.btnCul;
+
+            document.getElementById('txt-hist-tag').innerText = t.histTag;
+            document.getElementById('txt-hist-title').innerText = t.histTitle;
+            document.getElementById('txt-hist-desc').innerText = t.histDesc;
+            document.getElementById('txt-era1-title').innerText = t.era1T;
+            document.getElementById('txt-era1-desc').innerText = t.era1D;
+            document.getElementById('txt-era2-title').innerText = t.era2T;
+            document.getElementById('txt-era2-desc').innerText = t.era2D;
+            document.getElementById('txt-era3-title').innerText = t.era3T;
+            document.getElementById('txt-era3-desc').innerText = t.era3D;
+            document.getElementById('txt-era4-title').innerText = t.era4T;
+            document.getElementById('txt-era4-desc').innerText = t.era4D;
+
+            document.getElementById('txt-cul-tag').innerText = t.culTag;
+            document.getElementById('txt-cul-title').innerText = t.culTitle;
+            document.getElementById('txt-cul-desc').innerText = t.culDesc;
+            document.getElementById('txt-submains').innerText = t.subMains;
+            document.getElementById('txt-subdrinks').innerText = t.subDrinks;
+            document.getElementById('txt-subdesserts').innerText = t.subDesserts;
+
+            document.getElementById('txt-m1-title').innerText = t.m1T; document.getElementById('txt-m1-desc').innerText = t.m1D; document.getElementById('txt-tag-m1').innerText = t.tagM1;
+            document.getElementById('txt-m2-title').innerText = t.m2T; document.getElementById('txt-m2-desc').innerText = t.m2D; document.getElementById('txt-tag-m2').innerText = t.tagM2;
+            document.getElementById('txt-m3-title').innerText = t.m3T; document.getElementById('txt-m3-desc').innerText = t.m3D; document.getElementById('txt-tag-m3').innerText = t.tagM3;
+            document.getElementById('txt-m4-title').innerText = t.m4T; document.getElementById('txt-m4-desc').innerText = t.m4D; document.getElementById('txt-tag-m4').innerText = t.tagM4;
+
+            document.getElementById('txt-d1-title').innerText = t.d1T; document.getElementById('txt-d1-desc').innerText = t.d1D; document.getElementById('txt-tag-d1').innerText = t.tagD1;
+            document.getElementById('txt-d2-title').innerText = t.d2T; document.getElementById('txt-d2-desc').innerText = t.d2D; document.getElementById('txt-tag-d2').innerText = t.tagD2;
+            document.getElementById('txt-d3-title').innerText = t.d3T; document.getElementById('txt-d3-desc').innerText = t.d3D; document.getElementById('txt-tag-d3').innerText = t.tagD3;
+            document.getElementById('txt-d4-title').innerText = t.d4T; document.getElementById('txt-d4-desc').innerText = t.d4D; document.getElementById('txt-tag-d4').innerText = t.tagD4;
+
+            document.getElementById('txt-s1-title').innerText = t.s1T; document.getElementById('txt-s1-desc').innerText = t.s1D; document.getElementById('txt-tag-s1').innerText = t.tagS1;
+            document.getElementById('txt-s2-title').innerText = t.s2T; document.getElementById('txt-s2-desc').innerText = t.s2D; document.getElementById('txt-tag-s2').innerText = t.tagS2;
+            document.getElementById('txt-s3-title').innerText = t.s3T; document.getElementById('txt-s3-desc').innerText = t.s3D; document.getElementById('txt-tag-s3').innerText = t.tagS3;
+            document.getElementById('txt-s4-title').innerText = t.s4T; document.getElementById('txt-s4-desc').innerText = t.s4D; document.getElementById('txt-tag-s4').innerText = t.tagS4;
+
+            document.querySelectorAll('.btn-recipe-action span').forEach(s => s.innerText = t.btnRecipeText);
+            document.getElementById('recipe-ing-head').innerHTML = t.ingHead;
+            document.getElementById('recipe-prep-head').innerHTML = t.prepHead;
+
+            document.getElementById('txt-econ-tag').innerText = t.econTag;
+            document.getElementById('txt-econ-title').innerText = t.econTitle;
+            document.getElementById('txt-econ-desc').innerText = t.econDesc;
+            document.getElementById('txt-ec1-title').innerText = t.ec1T; document.getElementById('txt-ec1-desc').innerText = t.ec1D;
+            document.getElementById('txt-ec2-title').innerText = t.ec2T; document.getElementById('txt-ec2-desc').innerText = t.ec2D;
+            document.getElementById('txt-ec3-title').innerText = t.ec3T; document.getElementById('txt-ec3-desc').innerText = t.ec3D;
+            document.getElementById('txt-ec4-badge').innerText = t.ec4Badge; document.getElementById('txt-ec4-title').innerText = t.ec4T; document.getElementById('txt-ec4-desc').innerText = t.ec4D;
+
+            document.getElementById('txt-calc-tag').innerText = t.calcTag;
+            document.getElementById('txt-calc-title').innerText = t.calcTitle;
+            document.getElementById('txt-calc-desc').innerText = t.calcDesc;
+            document.getElementById('txt-calc-label').innerText = t.calcLabel;
+            document.getElementById('txt-calc-select-dish').innerText = t.calcSelectDish;
+            document.getElementById('txt-calc-inc-drink').innerText = t.calcIncDrink;
+            document.getElementById('txt-calc-inc-dessert').innerText = t.calcIncDessert;
+            document.getElementById('txt-calc-ing-title').innerText = t.calcIngTitle;
+
+            document.getElementById('txt-quiz-tag').innerText = t.quizTag;
+            document.getElementById('txt-quiz-title').innerText = t.quizTitle;
+            document.getElementById('txt-quiz-desc').innerText = t.quizDesc;
+            document.getElementById('txt-quiz-res-title').innerText = t.quizResT;
+            document.getElementById('txt-quiz-retry').innerText = t.quizRetry;
+
+            document.getElementById('txt-flag-modal-title').innerText = t.flagTitle;
+            document.getElementById('txt-f-red').innerText = t.fRed; document.getElementById('txt-f-red-t').innerText = t.fRedT;
+            document.getElementById('txt-f-white').innerText = t.fWhite; document.getElementById('txt-f-white-t').innerText = t.fWhiteT;
+            document.getElementById('txt-f-black').innerText = t.fBlack; document.getElementById('txt-f-black-t').innerText = t.fBlackT;
+            document.getElementById('txt-f-eagle').innerText = t.fEagle; document.getElementById('txt-f-eagle-t').innerText = t.fEagleT;
+
+            document.getElementById('txt-footer').innerText = t.footer;
+
+            updateCalculator();
+            loadQuizQuestion();
+        }
+
+        // Dados Avançados da Calculadora Completa
+        const mealIngredientsData = {
+            koshari: [
+                { name: "Arroz branco", perPerson: 50, unit: "g" },
+                { name: "Macarrão curto", perPerson: 40, unit: "g" },
+                { name: "Lentilhas marrons", perPerson: 40, unit: "g" },
+                { name: "Grão-de-bico", perPerson: 25, unit: "g" },
+                { name: "Cebolas para fritar", perPerson: 0.5, unit: "unid." },
+                { name: "Molho de tomate", perPerson: 65, unit: "ml" }
+            ],
+            ful: [
+                { name: "Favas cozidas", perPerson: 100, unit: "g" },
+                { name: "Azeite de oliva", perPerson: 15, unit: "ml" },
+                { name: "Limão fresco", perPerson: 0.5, unit: "unid." },
+                { name: "Pão Baladi egípcio", perPerson: 1.5, unit: "unid." },
+                { name: "Alho picado", perPerson: 1, unit: "dente" }
+            ],
+            tameya: [
+                { name: "Favas moídas", perPerson: 75, unit: "g" },
+                { name: "Coentro & Salsa", perPerson: 15, unit: "g" },
+                { name: "Gergelim", perPerson: 10, unit: "g" },
+                { name: "Óleo para fritar", perPerson: 50, unit: "ml" }
+            ]
+        };
+
+        const drinkData = [
+            { name: "Hibisco seco (Karkadeh)", perPerson: 15, unit: "g" },
+            { name: "Água mineral", perPerson: 250, unit: "ml" },
+            { name: "Açúcar", perPerson: 20, unit: "g" }
+        ];
+
+        const dessertData = [
+            { name: "Sêmola de trigo (Basbousa)", perPerson: 40, unit: "g" },
+            { name: "Manteiga / Ghee", perPerson: 15, unit: "g" },
+            { name: "Xarope de açúcar", perPerson: 30, unit: "ml" }
+        ];
+
+        function updateCalculator() {
+            const portions = parseInt(document.getElementById('portion-slider').value);
+            document.getElementById('portion-count').innerText = portions;
+
+            const selectedDish = document.getElementById('calc-dish-select').value;
+            const includeDrink = document.getElementById('calc-include-drink').checked;
+            const includeDessert = document.getElementById('calc-include-dessert').checked;
+
+            const listContainer = document.getElementById('ingredients-list');
+            listContainer.innerHTML = '';
+
+            // Prato Principal
+            const mainItems = mealIngredientsData[selectedDish] || mealIngredientsData.koshari;
+            mainItems.forEach(item => {
+                const total = item.perPerson * portions;
+                const formatted = (item.unit === 'g' || item.unit === 'ml') ? Math.round(total) : total.toFixed(1);
+
+                const card = document.createElement('div');
+                card.className = "bg-egyptDark/60 border border-egyptGold/30 rounded-xl p-3 flex justify-between items-center shadow";
+                card.innerHTML = `
+                    <span class="text-egyptSand/90 text-xs font-medium">${item.name}</span>
+                    <span class="text-egyptGold font-bold text-xs">${formatted} ${item.unit}</span>
+                `;
+                listContainer.appendChild(card);
+            });
+
+            // Bebidas
+            if (includeDrink) {
+                drinkData.forEach(item => {
+                    const total = item.perPerson * portions;
+                    const formatted = (item.unit === 'g' || item.unit === 'ml') ? Math.round(total) : total.toFixed(1);
+
+                    const card = document.createElement('div');
+                    card.className = "bg-egyptDark/60 border border-egyptTurquoise/40 rounded-xl p-3 flex justify-between items-center shadow";
+                    card.innerHTML = `
+                        <span class="text-egyptSand/90 text-xs font-medium">${item.name}</span>
+                        <span class="text-egyptTurquoise font-bold text-xs">${formatted} ${item.unit}</span>
+                    `;
+                    listContainer.appendChild(card);
+                });
+            }
+
+            // Sobremesa
+            if (includeDessert) {
+                dessertData.forEach(item => {
+                    const total = item.perPerson * portions;
+                    const formatted = (item.unit === 'g' || item.unit === 'ml') ? Math.round(total) : total.toFixed(1);
+
+                    const card = document.createElement('div');
+                    card.className = "bg-egyptDark/60 border border-amber-400/40 rounded-xl p-3 flex justify-between items-center shadow";
+                    card.innerHTML = `
+                        <span class="text-egyptSand/90 text-xs font-medium">${item.name}</span>
+                        <span class="text-amber-400 font-bold text-xs">${formatted} ${item.unit}</span>
+                    `;
+                    listContainer.appendChild(card);
+                });
+            }
+        }
+
+        const quizData = {
+            pt: [
+                { question: "Qual é considerado o prato nacional do Egito?", options: ["Falafel", "Koshari", "Hummus", "Kebab"], correct: 1 },
+                { question: "Qual rei unificou o Egito Antigo por volta de 3100 a.C.?", options: ["Alexandre", "Narmer", "Cleópatra", "Tutancâmon"], correct: 1 },
+                { question: "Qual rio sustenta mais de 95% da população egípcia?", options: ["Tigre", "Nilo", "Eufrates", "Jordão"], correct: 1 },
+                { question: "Qual ingrediente principal diferencia a Ta'meya do falafel comum?", options: ["Grão-de-bico", "Favas moídas", "Lentilha", "Ervilha"], correct: 1 }
+            ],
+            en: [
+                { question: "Which dish is considered the national dish of Egypt?", options: ["Falafel", "Koshari", "Hummus", "Kebab"], correct: 1 },
+                { question: "Which king unified Ancient Egypt around 3100 BC?", options: ["Alexander", "Narmer", "Cleopatra", "Tutankhamun"], correct: 1 },
+                { question: "Which river supports over 95% of Egypt's population?", options: ["Tigris", "Nile", "Euphrates", "Jordan"], correct: 1 },
+                { question: "What key ingredient distinguishes Ta'meya from regular falafel?", options: ["Chickpeas", "Ground fava beans", "Lentils", "Peas"], correct: 1 }
+            ],
+            ar: [
+                { question: "ما هو الطبق الذي يعتبر الطبق الوطني لمصر؟", options: ["فلافل", "كشري", "حمص", "كباب"], correct: 1 },
+                { question: "من هو الملك الذي وحد مصر القديمة حوالي 3100 قبل الميلاد؟", options: ["الإسكندر", "نعرمر (مينا)", "كليوباترا", "توت عنخ آمون"], correct: 1 },
+                { question: "ما هو النهر الذي يعيش عليه أكثر من 95٪ من سكان مصر؟", options: ["دجلة", "النيل", "الفرات", "الأردن"], correct: 1 },
+                { question: "ما هو المكون الرئيسي الذي يميز الطعمية عن الفلافل العادية؟", options: ["حمص", "فول مدشوش", "عدس", "بذلاء"], correct: 1 }
+            ]
+        };
+
+        let currentQuestion = 0;
+        let score = 0;
+
+        function loadQuizQuestion() {
+            const data = quizData[currentLang] || quizData.pt;
+            if (currentQuestion < data.length) {
+                const q = data[currentQuestion];
+                document.getElementById('quiz-progress').innerText = `${q.question ? (currentLang==='ar'?'سؤال':'Questão') : ''} ${currentQuestion + 1} / ${data.length}`;
+                document.getElementById('quiz-score-indicator').innerText = `${currentLang==='ar'?'النتيجة':'Pontuação'}: ${score}`;
+                document.getElementById('quiz-question-text').innerText = q.question;
+
+                const optionsContainer = document.getElementById('quiz-options');
+                optionsContainer.innerHTML = '';
+
+                q.options.forEach((opt, index) => {
+                    const btn = document.createElement('button');
+                    btn.className = "w-full text-left bg-egyptDark/60 hover:bg-egyptGold/10 border border-egyptGold/20 hover:border-egyptGold text-egyptSand py-3 px-4 rounded-xl transition text-sm font-medium flex items-center justify-between";
+                    btn.innerHTML = `<span>${opt}</span> <i class="fa-solid fa-chevron-right text-xs text-egyptGold/50"></i>`;
+                    btn.onclick = () => selectQuizAnswer(index);
+                    optionsContainer.appendChild(btn);
+                });
+            } else {
+                showQuizResult();
+            }
+        }
+
+        function selectQuizAnswer(selectedIndex) {
+            const data = quizData[currentLang] || quizData.pt;
+            if (selectedIndex === data[currentQuestion].correct) score++;
+            currentQuestion++;
+            loadQuizQuestion();
+        }
+
+        function showQuizResult() {
+            const data = quizData[currentLang] || quizData.pt;
+            document.getElementById('quiz-question-box').classList.add('hidden');
+            document.getElementById('quiz-result-box').classList.remove('hidden');
+            document.getElementById('quiz-final-score').innerText = `${currentLang==='ar'?'أجبت بشكل صحيح على':'Você acertou'} ${score} / ${data.length}`;
+        }
+
+        function resetQuiz() {
+            currentQuestion = 0;
+            score = 0;
+            document.getElementById('quiz-question-box').classList.remove('hidden');
+            document.getElementById('quiz-result-box').classList.add('hidden');
+            loadQuizQuestion();
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            updateCalculator();
+            loadQuizQuestion();
+        });
+    </script>
+</body>
+</html>
